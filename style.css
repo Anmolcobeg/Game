@@ -1,0 +1,485 @@
+/* ============================================================
+   Earth Day Explorer — style.css
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap');
+
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #0a1f0f;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* ── Game Root ────────────────────────────────────────────── */
+#game-root {
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 560px;
+  background: #0a1f0f;
+  color: #e8f5e2;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Floating Leaves Background ──────────────────────────── */
+.bg-leaves {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.leaf {
+  position: absolute;
+  opacity: 0.07;
+  animation: floatLeaf linear infinite;
+}
+
+@keyframes floatLeaf {
+  0%   { transform: translateY(110%) rotate(0deg);   opacity: 0; }
+  10%  { opacity: 0.07; }
+  90%  { opacity: 0.07; }
+  100% { transform: translateY(-110%) rotate(360deg); opacity: 0; }
+}
+
+/* ── Screens ──────────────────────────────────────────────── */
+.screen {
+  position: relative;
+  z-index: 1;
+  padding: 2.5rem 1.5rem 2rem;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  gap: 1.2rem;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* ── Shared Buttons ───────────────────────────────────────── */
+.btn-primary {
+  background: #3d9a45;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 2.4rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+  letter-spacing: 0.03em;
+}
+
+.btn-primary:hover {
+  background: #4db356;
+  transform: scale(1.04);
+}
+
+.btn-sec {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.07);
+  color: #c4e8c7;
+  border: 1px solid rgba(111, 207, 118, 0.3);
+  padding: 0.7rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-sec:hover {
+  background: rgba(255, 255, 255, 0.13);
+}
+
+.btn-sec.accent {
+  background: #3d9a45;
+  color: #fff;
+  border-color: transparent;
+  width: 100%;
+}
+
+.btn-sec.accent:hover {
+  background: #4db356;
+}
+
+/* ── INTRO SCREEN ─────────────────────────────────────────── */
+#intro {
+  justify-content: center;
+  text-align: center;
+}
+
+.earth-icon {
+  font-size: 72px;
+  animation: pulse 2.5s ease-in-out infinite;
+  display: block;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.07); }
+}
+
+.game-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  color: #6fcf76;
+  line-height: 1.2;
+}
+
+.game-subtitle {
+  font-size: 0.95rem;
+  color: #8ac98f;
+  max-width: 340px;
+  line-height: 1.6;
+}
+
+.choose-label {
+  font-size: 0.8rem;
+  color: #6fcf76;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+.mode-cards {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.mode-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(111, 207, 118, 0.25);
+  border-radius: 16px;
+  padding: 1.1rem 1.4rem;
+  cursor: pointer;
+  text-align: left;
+  width: 150px;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.mode-card:hover {
+  background: rgba(111, 207, 118, 0.12);
+  border-color: rgba(111, 207, 118, 0.6);
+  transform: translateY(-2px);
+}
+
+.mode-card.selected {
+  background: rgba(111, 207, 118, 0.18);
+  border-color: #6fcf76;
+}
+
+.mode-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.mode-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #d4f0d7;
+}
+
+.mode-desc {
+  font-size: 0.75rem;
+  color: #8ac98f;
+  margin-top: 0.25rem;
+  line-height: 1.4;
+}
+
+/* ── FACT SCREEN ──────────────────────────────────────────── */
+#fact-screen {
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.fact-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(111, 207, 118, 0.15);
+  color: #6fcf76;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.fact-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(111, 207, 118, 0.2);
+  border-radius: 20px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 480px;
+  animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fact-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.fact-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: #a8e6ad;
+  margin-bottom: 0.6rem;
+}
+
+.fact-body {
+  font-size: 0.9rem;
+  color: #c4e8c7;
+  line-height: 1.7;
+}
+
+.fact-number {
+  font-size: 0.75rem;
+  color: #6fcf76;
+  margin-top: 0.75rem;
+  font-weight: 600;
+}
+
+.nav-row {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ── QUIZ SCREEN ──────────────────────────────────────────── */
+#quiz-screen {
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quiz-progress-text {
+  font-size: 0.8rem;
+  color: #8ac98f;
+  font-weight: 500;
+}
+
+.score-badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6fcf76;
+  background: rgba(111, 207, 118, 0.13);
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+
+.progress-bar-wrap {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #6fcf76;
+  border-radius: 100px;
+  transition: width 0.4s;
+}
+
+.question-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(111, 207, 118, 0.2);
+  border-radius: 20px;
+  padding: 1.5rem;
+  animation: slideIn 0.35s ease;
+}
+
+.q-cat {
+  font-size: 0.7rem;
+  color: #6fcf76;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.6rem;
+}
+
+.q-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: #e8f5e2;
+  line-height: 1.5;
+}
+
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.option-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(111, 207, 118, 0.2);
+  color: #c4e8c7;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.option-btn:hover:not(:disabled) {
+  background: rgba(111, 207, 118, 0.12);
+  border-color: rgba(111, 207, 118, 0.5);
+  transform: translateX(3px);
+}
+
+.option-btn:disabled {
+  cursor: default;
+}
+
+.option-btn.correct {
+  background: rgba(61, 154, 69, 0.3);
+  border-color: #6fcf76;
+  color: #a8e6ad;
+}
+
+.option-btn.wrong {
+  background: rgba(226, 75, 74, 0.2);
+  border-color: #e24b4a;
+  color: #f5b3b3;
+}
+
+.opt-letter {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(111, 207, 118, 0.15);
+  color: #6fcf76;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.correct .opt-letter {
+  background: rgba(111, 207, 118, 0.3);
+}
+
+.wrong .opt-letter {
+  background: rgba(226, 75, 74, 0.3);
+  color: #f5b3b3;
+}
+
+.explanation-box {
+  background: rgba(111, 207, 118, 0.08);
+  border: 1px solid rgba(111, 207, 118, 0.25);
+  border-radius: 12px;
+  padding: 0.9rem;
+  font-size: 0.85rem;
+  color: #a8e6ad;
+  line-height: 1.6;
+  animation: slideIn 0.3s ease;
+}
+
+.explanation-box b {
+  color: #6fcf76;
+}
+
+/* ── RESULTS SCREEN ───────────────────────────────────────── */
+#results {
+  justify-content: center;
+  text-align: center;
+}
+
+.result-globe {
+  font-size: 5rem;
+  animation: spin 3s linear infinite;
+  display: block;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.result-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: #6fcf76;
+}
+
+.result-score {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #a8e6ad;
+}
+
+.result-sub {
+  font-size: 0.9rem;
+  color: #8ac98f;
+}
+
+.result-msg {
+  font-size: 1rem;
+  color: #c4e8c7;
+  background: rgba(111, 207, 118, 0.1);
+  border: 1px solid rgba(111, 207, 118, 0.2);
+  border-radius: 16px;
+  padding: 1rem 1.4rem;
+  max-width: 380px;
+  line-height: 1.6;
+}
+
+.result-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 420px) {
+  .game-title  { font-size: 2rem; }
+  .mode-card   { width: 130px; padding: 0.9rem 1rem; }
+  .screen      { padding: 2rem 1rem; }
+}
